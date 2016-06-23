@@ -13,7 +13,7 @@ var ReplyText = React.createClass({
 					<img className="ico-img img-responsive img-rounded" src="https://placeimg.com/200/200/tech"></img>
 					<div className="post-detail">
 						<h4>Fake Name</h4>
-						<time datetime="2017-02-14" className="time">2017-02-14</time>
+						<time datetime="2017-02-14" className="time">{this.props.time}</time>
 					</div>
 				</div>
 				<div className="text-holder">

@@ -4,9 +4,10 @@ var ReplyBox = require('../components/ReplyBox');
 var PostUI = React.createClass({
 	render: function() {
     var rows = [];
+		console.log(this.props.replyList);
     if(this.props.replyList !== undefined){
 				this.props.replyList.forEach(function(reply) {
-					rows.push(<ReplyText text={reply.text} ></ReplyText>);
+					rows.push(<ReplyText text={reply.text} time={reply.time} ></ReplyText>);
 			}.bind(this));
     }
 
@@ -21,7 +22,7 @@ var PostUI = React.createClass({
 								<img className="ico-img img-responsive img-rounded" src="https://placeimg.com/200/200/tech"></img>
 								<div className="post-detail">
 									<h3>{this.props.username}</h3>
-									<time datetime="2017-02-14" className="time">2017-02-14</time>
+									<time datetime="2017-02-14" className="time">{this.props.time}</time>
 								</div>
 							</div>
 							<div className="text-holder"><p>{this.props.post}</p></div>

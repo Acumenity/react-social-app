@@ -16,12 +16,13 @@ var addUser = function(username, password) {
         }
     };
 }
-var addPost = function(text, user) {
+var addPost = function(text, user,time) {
     return {
         type: ActionConstants.ADD_POST,
         post: {
             "user": user,
-            "post": text
+            "post": text,
+            "time":time
         }
     };
 }
@@ -35,13 +36,14 @@ var likePost = function(user, postNumber) {
 
     };
 }
-var addReply = function(user, postNumber, text) {
+var addReply = function(user, postNumber, text, time) {
     return {
         type: ActionConstants.ADD_REPLY,
         post: {
             "user": user,
             "postNumber": postNumber,
-            "text": text
+            "text": text,
+            "time":time
         }
     };
 }

@@ -15,14 +15,17 @@ var Home = React.createClass({
             },
             handlerSubmitPost: function(e) {
                 e.preventDefault();
-                this.props.addpost(this.state.post, this.props.userName);
+								var time = new Date().toString();;
+								console.log(time);
+                this.props.addpost(this.state.post, this.props.userName,time);
                 this.setState(this.props.postList);
                 var post = this.findPost(this.props.userName, this.state.post)
                 this.state.reply.push({
                     "username": this.props.userName,
                     "post": post.post,
                     "text": "",
-                    "index": post.index
+                    "index": post.index,
+										"time":""
                 })
                 this.setState({
                     post: ""
@@ -67,8 +70,9 @@ var Home = React.createClass({
 
             handerReply: function(e) {
                 e.preventDefault();
-                console.log(e.target.value);
-                this.props.reply(this.state.reply[e.target.value].username, this.state.reply[e.target.value].index, this.state.reply[e.target.value].text);
+
+							 var time = new Date().toString();;
+                this.props.reply(this.state.reply[e.target.value].username, this.state.reply[e.target.value].index, this.state.reply[e.target.value].text,time );
                 this.setState(this.props.postList);
                 var reply = this.state.reply;
                 reply[e.target.value].text = "";
@@ -84,7 +88,9 @@ var Home = React.createClass({
                             "username": this.props.postList[i].username,
                             "post": post,
                             "text": "",
-                            "index": index
+                            "index": index,
+														"time":""
+
                         });
 
                     }.bind(this));
@@ -126,6 +132,9 @@ var Home = React.createClass({
                                     likes = {
                                         post.likes
                                     }
+																		time = {
+																				post.time
+																		}
                                     onSubmitLike = {
                                         this.handerSubmitlike
                                     } > < /PostUI>);
@@ -162,14 +171,14 @@ var Home = React.createClass({
         }
         var mapDispatchToProps = function(dispatch) {
             return {
-                addpost: function(post, user) {
-                    dispatch(actions.addPost(post, user));
+                addpost: function(post, user,time ) {
+                    dispatch(actions.addPost(post, user,time));
                 },
                 like: function(user, postNumber) {
                     dispatch(actions.likePost(user, postNumber));
                 },
-                reply: function(user, postNumber, text) {
-                    dispatch(actions.addReply(user, postNumber, text));
+                reply: function(user, postNumber, text, time) {
+                    dispatch(actions.addReply(user, postNumber, text, time));
                 },
             };
         }

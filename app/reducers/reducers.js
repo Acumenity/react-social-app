@@ -24,9 +24,10 @@ var userReducer = function(state, action) {
     if (action.type === ActionConstants.ADD_POST) {
         var index = helper(state, action.post.user)
         if (index != -1) {
-            state[index].post.push({
+            state[index].post.unshift({
                 "post": action.post.post,
-                "likes": 0
+                "likes": 0,
+                "time":action.post.time
             })
         }
 
@@ -36,15 +37,15 @@ var userReducer = function(state, action) {
         if (index != -1) {
             if (state[index].post[action.post.postNumber]['replies'] !== undefined) {
                 state[index].post[action.post.postNumber]['replies'].push({
-                    time: "asda",
+                    "time": action.post.time,
                     "text": action.post.text
                 });
                 // state[index].post.push({"post":action.post.post,"likes":0})
             } else {
                 state[index].post[action.post.postNumber]['replies'] = [];
                 state[index].post[action.post.postNumber]['replies'].push({
-                    time: "asda",
-                    "text": action.post.text
+                  "time": action.post.time,
+                  "text": action.post.text
                 });
             }
         }
