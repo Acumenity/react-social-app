@@ -144,7 +144,10 @@ var Home = React.createClass({
                         }
                         onSubmitPost = {
                             this.handlerSubmitPost
-                        } > < /PostBox> <
+                        }
+												username = {
+													this.props.username
+												} > < /PostBox> <
                         div > {
                             rows
                         } < /div> <

@@ -17,11 +17,15 @@ var PostUI = React.createClass({
 				<div className="col-xs-12">
 				<div className="post clearfix">
 						<div className="post-box clearfix">
-							<img className="ico-img img-responsive img-rounded" src="https://placeimg.com/200/200/tech"></img>
-							<div className="post-detail">
-								<h3>{this.props.username}</h3>
-								<p>{this.props.post}</p>
+							<div className="inner-holder">
+								<img className="ico-img img-responsive img-rounded" src="https://placeimg.com/200/200/tech"></img>
+								<div className="post-detail">
+									<h3>{this.props.username}</h3>
+									<time datetime="2017-02-14" className="time">2017-02-14</time>
+								</div>
 							</div>
+							<div className="text-holder"><p>{this.props.post}</p></div>
+							<a className="btn-remove" href="#"><i className="fa fa-times" aria-hidden="true"></i></a>
 						</div>
 
 						<div className="post-block clearfix">
@@ -29,7 +33,17 @@ var PostUI = React.createClass({
 								<li>
 									<button onClick={this.props.onSubmitLike} data-test={this.props.number} type="submit" className="btn-like">
 										<span className="count">{this.props.likes}</span>
-										<i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
+										Like
+									</button>
+								</li>
+								<li>
+									<button type="button" className="btn-detail">
+										Share
+									</button>
+								</li>
+								<li>
+									<button type="button" className="btn-detail">
+										Comment
 									</button>
 								</li>
 							</ul>

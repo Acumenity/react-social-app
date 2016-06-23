@@ -29,10 +29,12 @@
 
 .post-box{
   overflow: hidden;
+  position: relative;
+  padding: 0 20px 0 0;
 }
 
 .post{
-  margin: 0 auto 25px;
+  margin: 0 auto 30px;
   border: 1px solid #ccc;
   -webkit-box-shadow: 1px 0 3px 0 rgba(0,0,0,0.3);
   box-shadow: 1px 0 3px 0 rgba(0,0,0,0.3);
@@ -48,7 +50,9 @@
   overflow: hidden;
   margin: 0 0 10px;
 }
-.post-detail h3{margin: 0 0 5px;}
+.post-detail h4,
+.post-detail h3{margin: 0;}
+.btn-detail,
 .post .btn-like{
   padding: 0;
   border: 0;
@@ -66,6 +70,13 @@
   padding: 10px 5px;
 }
 .post-block .list{margin-bottom: 5px;}
+.post-block .list li+li:before{
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 8px 0 0;
+  color: #666;
+  content: '-';
+}
 .post-block .list .btn-like{margin-bottom: 0;}
 .post-block .form-control{
   float: left;
@@ -104,3 +115,23 @@
   padding: 10px;
 
 }
+.btn-remove{
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-size: 16px;
+  line-height: 16px;
+  color: #999;
+}
+.time{
+  display: block;
+  color: #999;
+  font-size: 12px;
+  line-height: 16px;
+}
+.inner-holder{overflow: hidden;}
+.text-holder{
+  overflow: hidden;
+  padding: 0 0 0 50px;
+}
+.comments-list .text-holder{padding: 0 0 0 40px;}
