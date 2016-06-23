@@ -72,7 +72,7 @@ var Home = React.createClass({
                 e.preventDefault();
 
 							 var time = new Date().toString();;
-                this.props.reply(this.state.reply[e.target.value].username, this.state.reply[e.target.value].index, this.state.reply[e.target.value].text,time );
+                this.props.reply(this.state.reply[e.target.value].username, this.state.reply[e.target.value].index, this.state.reply[e.target.value].text,time , this.props.userName);
                 this.setState(this.props.postList);
                 var reply = this.state.reply;
                 reply[e.target.value].text = "";
@@ -179,8 +179,8 @@ var Home = React.createClass({
                 like: function(user, postNumber) {
                     dispatch(actions.likePost(user, postNumber));
                 },
-                reply: function(user, postNumber, text, time) {
-                    dispatch(actions.addReply(user, postNumber, text, time));
+                reply: function(user, postNumber, text, time, replyUser) {
+                    dispatch(actions.addReply(user, postNumber, text, time, replyUser));
                 },
             };
         }
