@@ -102,8 +102,22 @@ var Home = React.createClass({
 
                 var rows = [];
                 var index = 0;
-
+                var newComent = <h3 className='text-bg text-center'>
+                	You need to login first to post and view comments
+                	</h3>;
                 if (this.props.isLogin) {
+                	newComent = <PostBox textValue = {
+                            this.state.post
+                        }
+                        onTextChange = {
+                            this.handerTextAreatInput
+                        }
+                        onSubmitPost = {
+                            this.handlerSubmitPost
+                        }
+						username = {
+							this.props.username
+						} > < /PostBox>;
                     for (var ii = 0; ii < this.props.postList.length; ii++) {
                         var indexs = 0;
                         var username = this.props.postList[ii].username;
@@ -141,26 +155,14 @@ var Home = React.createClass({
                                     index++;
                                 }.bind(this));
                         }
-                    }
-                    return ( <
-                        div >
-                        <
-                        PostBox textValue = {
-                            this.state.post
-                        }
-                        onTextChange = {
-                            this.handerTextAreatInput
-                        }
-                        onSubmitPost = {
-                            this.handlerSubmitPost
-                        }
-												username = {
-													this.props.username
-												} > < /PostBox> <
-                        div > {
+                    }                    
+                    return ( 
+                    	<div >
+                        	{newComent}
+						<div > {
                             rows
-                        } < /div> <
-                        /div>
+                        } < /div> 
+                        </div>
                     );
                 }
             });
