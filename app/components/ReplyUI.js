@@ -1,6 +1,6 @@
 var React = require('react');
 
-var ReplyBox = React.createClass({
+var ReplyText = React.createClass({
 	render: function() {
     var divStyle = {
       width: 300,
@@ -14,9 +14,9 @@ var ReplyBox = React.createClass({
           <p>{this.props.text}</p>
         </div>
       </li>
-  
+
 	);
 }
 });
 
-module.exports = ReplyBox;
+module.exports = ReplyText;

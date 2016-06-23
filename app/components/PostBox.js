@@ -7,8 +7,7 @@ var PostBox = React.createClass({
       margin: 'auto'
     };
 	return (
-		<div style={divStyle}>
-
+		<div className="container">
         <div className="post-container clearfix">
           <div className="heading-holder">
 						<img className="ico-img img-responsive img-rounded" src="https://placeimg.com/200/200/tech"></img>
