@@ -7,7 +7,7 @@ var PostUI = React.createClass({
 		console.log(this.props.replyList);
     if(this.props.replyList !== undefined){
 				this.props.replyList.forEach(function(reply) {
-					rows.push(<ReplyText text={reply.text} time={reply.time} ></ReplyText>);
+					rows.push(<ReplyText text={reply.text} time={reply.time} replier={reply.replyUser} ></ReplyText>);
 			}.bind(this));
     }
 

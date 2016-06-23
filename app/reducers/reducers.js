@@ -38,14 +38,15 @@ var userReducer = function(state, action) {
             if (state[index].post[action.post.postNumber]['replies'] !== undefined) {
                 state[index].post[action.post.postNumber]['replies'].push({
                     "time": action.post.time,
-                    "text": action.post.text
+                    "text": action.post.text,
+                    "replyUser":action.post.replyUser
                 });
-                // state[index].post.push({"post":action.post.post,"likes":0})
             } else {
                 state[index].post[action.post.postNumber]['replies'] = [];
                 state[index].post[action.post.postNumber]['replies'].push({
                   "time": action.post.time,
-                  "text": action.post.text
+                  "text": action.post.text,
+                  "replyUser":action.post.replyUser
                 });
             }
         }

@@ -36,14 +36,15 @@ var likePost = function(user, postNumber) {
 
     };
 }
-var addReply = function(user, postNumber, text, time) {
+var addReply = function(user, postNumber, text, time,replyUser) {
     return {
         type: ActionConstants.ADD_REPLY,
         post: {
             "user": user,
             "postNumber": postNumber,
             "text": text,
-            "time":time
+            "time":time,
+            "replyUser":replyUser
         }
     };
 }
