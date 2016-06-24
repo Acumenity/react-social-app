@@ -49,10 +49,19 @@ var addReply = function(user, postNumber, text, time,replyUser) {
     };
 }
 
-
+var removePost = function(user, postNumber) {
+    return {
+        type: ActionConstants.REMOVE_POST,
+        post: {
+            "user": user,
+            "postNumber": postNumber
+        }
+    };
+}
 module.exports = {
     addUser,
     addPost,
     likePost,
-    addReply
+    addReply,
+    removePost
 };

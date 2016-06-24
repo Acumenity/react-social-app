@@ -7,10 +7,12 @@ var actions = require('../action/action')
 var PostUI = require('../components/PostUI');
 var Home = React.createClass({
             getInitialState: function() {
-
+								var helpObj =  this.helper();
                 return {
                     post: "",
-                    reply: this.helper()
+                    reply: helpObj.reply,
+										postArray : helpObj.postArray
+
                 };
             },
             handlerSubmitPost: function(e) {
@@ -22,15 +24,38 @@ var Home = React.createClass({
                 var post = this.findPost(this.props.userName, this.state.post)
                 this.state.reply.push({
                     "username": this.props.userName,
-                    "post": post.post,
                     "text": "",
                     "index": post.index,
 										"time":""
-                })
+                });
+							 this.state.postArray.unshift(
+									{
+										"username" : this.props.userName,
+										"time" : post.post.time,
+										"text": post.post.post,
+										"post": post.post,
+										"reply":[],
+										"like":0,
+										"index": post.index
+									}
+								);
+								var postArrayCopy = this.state.postArray;
+								console.log(this.state.postArray);
                 this.setState({
-                    post: ""
+                    post: "",
+										postArray: postArrayCopy
                 });
             },
+						SortArray : function(arr){
+							arr.sort(function(a, b){
+    						var keyA = new Date(a.time),
+        				keyB = new Date(b.time);
+    					  if(keyA < keyB) return -1;
+    						if(keyA > keyB) return 1;
+    						return 0;
+								});
+								console.log(arr);
+						},
             findPost: function(username, text) {
                 for (var i = 0; i < this.props.postList.length; i++) {
                     if (username == this.props.postList[i].username) {
@@ -54,8 +79,10 @@ var Home = React.createClass({
             handerSubmitlike: function(e) {
                 e.preventDefault();
                 var postNumber = e.currentTarget.getAttribute('data-test');
-                this.props.like(this.state.reply[postNumber].username, this.state.reply[postNumber].index);
-                this.setState(this.props.postList);
+                this.props.like(this.state.postArray[postNumber].username, this.state.postArray[postNumber].index);
+								this.setState({
+										postArray: this.helper().postArray
+								});
             },
 
             handerReplyChange: function(e) {
@@ -72,8 +99,10 @@ var Home = React.createClass({
                 e.preventDefault();
 
 							 var time = new Date().toString();;
-                this.props.reply(this.state.reply[e.target.value].username, this.state.reply[e.target.value].index, this.state.reply[e.target.value].text,time , this.props.userName);
-                this.setState(this.props.postList);
+                this.props.reply(this.state.postArray[e.target.value].username, this.state.postArray[e.target.value].index, this.state.reply[e.target.value].text,time , this.props.userName);
+								this.setState({
+										postArray: this.helper().postArray
+								});
                 var reply = this.state.reply;
                 reply[e.target.value].text = "";
                 this.setState({
@@ -81,9 +110,22 @@ var Home = React.createClass({
                 });
             },
             helper: function() {
+							var postArray = [];
                 var reply = [];
                 for (var i = 0; i < this.props.postList.length; i++) {
                     this.props.postList[i].post.forEach(function(post, index) {
+											//console.log(post);
+											postArray.push(
+												{
+													"username" : this.props.postList[i].username,
+													"time" : post.time,
+													"text": post.post,
+													"post": post,
+													"reply": (post.replies !== undefined) ? post.replies : [],
+													"like":post.likes,
+													"index": index
+												}
+											);
                         reply.push({
                             "username": this.props.postList[i].username,
                             "post": post,
@@ -96,8 +138,27 @@ var Home = React.createClass({
                     }.bind(this));
 
                 }
-                return reply;
+
+								this.SortArray(postArray);
+								postArray.reverse();
+                return {"reply":reply,"postArray":postArray};
             },
+						handlerRemovePost : function(e){
+
+								e.preventDefault();
+
+								var index = e.currentTarget.getAttribute('data-test');
+								var username = this.state.postArray[index].username;
+								if(this.props.userName === username ){
+									this.props.remove(this.state.postArray[index].username,this.state.postArray[index].index);
+									this.setState({
+											postArray: this.helper().postArray
+									});
+								}
+
+								console.log(index);
+
+						},
             render: function() {
 
                 var rows = [];
@@ -118,12 +179,12 @@ var Home = React.createClass({
 						username = {
 							this.props.username
 						} > < /PostBox>;
-                    for (var ii = 0; ii < this.props.postList.length; ii++) {
+                    for (var ii = 0; ii < this.state.postArray.length; ii++) {
                         var indexs = 0;
-                        var username = this.props.postList[ii].username;
-                        this.props.postList[ii].post.forEach(function(post) {
+                        var username = this.state.postArray[ii].username;
+                      //  this.state.postArray[ii].post.forEach(function(post) {
                                 rows.push( < PostUI post = {
-                                        post.post
+                                        this.state.postArray[ii].text
                                     }
                                     username = {
                                         username
@@ -132,36 +193,39 @@ var Home = React.createClass({
                                         this.handerReply
                                     }
                                     replyList = {
-                                        post.replies
+                                        this.state.postArray[ii].reply
                                     }
                                     reply = {
-                                        this.state.reply[index]
+                                        this.state.reply[ii]
                                     }
                                     onReplyChange = {
                                         this.handerReplyChange
                                     }
                                     number = {
-                                        index
+                                        ii
                                     }
                                     likes = {
-                                        post.likes
+                                        this.state.postArray[ii].like
                                     }
+																		OnSubmitRemovePost = {
+																				this.handlerRemovePost
+																		}
 																		time = {
-																				post.time
+																				this.state.postArray[ii].time
 																		}
                                     onSubmitLike = {
                                         this.handerSubmitlike
                                     } > < /PostUI>);
-                                    index++;
-                                }.bind(this));
+                                  //  index++;
+                              //  }.bind(this));
                         }
-                    }                    
-                    return ( 
+                    }
+                    return (
                     	<div >
                         	{newComent}
 						<div > {
                             rows
-                        } < /div> 
+                        } < /div>
                         </div>
                     );
                 }
@@ -181,6 +245,9 @@ var Home = React.createClass({
                 },
                 reply: function(user, postNumber, text, time, replyUser) {
                     dispatch(actions.addReply(user, postNumber, text, time, replyUser));
+                },
+								remove: function(user, postNumber) {
+                    dispatch(actions.removePost(user, postNumber));
                 },
             };
         }

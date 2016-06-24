@@ -24,11 +24,18 @@ var userReducer = function(state, action) {
     if (action.type === ActionConstants.ADD_POST) {
         var index = helper(state, action.post.user)
         if (index != -1) {
-            state[index].post.unshift({
+            state[index].post.push({
                 "post": action.post.post,
                 "likes": 0,
                 "time":action.post.time
             })
+        }
+
+    }
+    if (action.type === ActionConstants.REMOVE_POST) {
+        var index = helper(state, action.post.user)
+        if (index != -1) {
+            state[index].post.splice(action.post.postNumber,1);
         }
 
     }
@@ -59,7 +66,7 @@ var userReducer = function(state, action) {
             state[index].post[action.userName.postNumber].likes = likeme;
         }
     }
-
+console.log(state);
     return state;
 }
 

@@ -4,7 +4,7 @@ var ReplyBox = require('../components/ReplyBox');
 var PostUI = React.createClass({
 	render: function() {
     var rows = [];
-		console.log(this.props.replyList);
+
     if(this.props.replyList !== undefined){
 				this.props.replyList.forEach(function(reply) {
 					rows.push(<ReplyText text={reply.text} time={reply.time} replier={reply.replyUser} ></ReplyText>);
@@ -26,7 +26,7 @@ var PostUI = React.createClass({
 								</div>
 							</div>
 							<div className="text-holder"><p>{this.props.post}</p></div>
-							<a className="btn-remove" href="#"><i className="fa fa-times" aria-hidden="true"></i></a>
+							<a className="btn-remove" onClick={ this.props.OnSubmitRemovePost}  data-test={this.props.number} value={this.props.number} href="#"><i className="fa fa-times" aria-hidden="true"></i></a>
 						</div>
 
 						<div className="post-block clearfix">
