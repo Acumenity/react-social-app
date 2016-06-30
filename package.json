@@ -13,12 +13,14 @@
   "dependencies": {
     "file-system": "^2.2.1",
     "fs": "0.0.2",
+    "node-fetch": "^1.5.3",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "redux-simple-storage": "^1.5.10",
     "redux-simple-storage-middleware": "^2.0.3",
     "redux-storage": "^4.0.1",
-    "redux-storage-engine-localstorage": "^1.1.1"
+    "redux-storage-engine-localstorage": "^1.1.1",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "axios": "^0.12.0",

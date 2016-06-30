@@ -14,18 +14,36 @@ var Main = React.createClass({
         router: React.PropTypes.object.isRequired
     },
     getInitialState: function() {
-        var credntials = persistentStorage.getCredntials();
-        if (credntials !== undefined) {
-            return {
-                loginUser: credntials[0],
-                IsLogin: true
-            };
-        } else {
+
+
             return {
                 loginUser: "",
                 IsLogin: false
-            };
+
         }
+
+    },
+    componentDidMount: function(){
+      console.log(this.props);
+      var credntials = persistentStorage.getCredntials();
+      if (credntials !== undefined) {
+         this.props.login(credntials[0], credntials[1]).then(function(){
+           console.log("i am ready now");
+
+          if(this.props.state.get('isLoggedIn')){
+            this.state.loginUser = credntials[0];
+            this.state.IsLogin = true;
+            this.context.router.push({
+                    pathname: '/home'
+            });
+            }
+          }.bind(this)) ;
+      }
+      else{
+        this.context.router.push({
+                pathname: '/login'
+        });
+      }
 
     },
     handleLoginInput: function(loginUser, IsLogin) {
@@ -46,7 +64,13 @@ var Main = React.createClass({
         });
 
     },
+    testLogin : function(){
+
+
+
+    },
     render: function() {
+      console.log(this.props.postList);
         var childrenWithProps = React.Children.map(this.props.children, function(child) {
             return React.cloneElement(child, {
                 loginUserprops: this.handleLoginInput,
@@ -60,6 +84,9 @@ var Main = React.createClass({
             Navbar userName = {
                 this.state.loginUser
             }
+            ontestLogin = {
+              this.testLogin
+            }
             logout = {
                 this.handlerLogout
             } >
@@ -72,13 +99,20 @@ var Main = React.createClass({
     }
 });
 
+var mapStateToProps = function(state) {
+    return {
+        state: state
+    }
+}
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(addUser, dispatch),
+      login: function(username, password) {
+        return  dispatch(login(username,password));
+      },
     };
 }
 
-module.exports = connect(mapDispatchToProps)(Main);
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Main);
 
 //module.exports = connect( mapDispatch)(Main);

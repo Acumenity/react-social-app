@@ -3,6 +3,10 @@ var ADD_USER = "addUser"
 var ADD_POST = "addPost"
 var LIKE_POST = "likePost"
 var REPLY_POST = "addReply"
+var axios = require('axios');
+//var fetch = require('node-fetch');
+var axios = require('axios');
+var helper = require('../utils/helper')
 var ActionConstants = require('../utils/ActionConstants');
 var addUser = function(username, password) {
 
@@ -12,7 +16,8 @@ var addUser = function(username, password) {
         user: {
             "username": username,
             "password": password,
-            "post": []
+            "post": [],
+            "_id" : nextTodoId++
         }
     };
 }
@@ -58,10 +63,103 @@ var removePost = function(user, postNumber) {
         }
     };
 }
+
+ loginError = function (error) {
+  return { error, type: ActionConstants.LOGGED_FAILED };
+}
+ getAllPostsSuccess = function(){
+   return  function(dispatch){
+     dispatch({ response, type: ActionConstants.GET_ALL_POST });
+     console.log("GET_ALL_POST");
+   //  router.transitionTo('/dashboard');
+   };
+ }
+ loginSuccess = function (response) {
+   return {
+     response, type: ActionConstants.LOGGED_SUCCESSFULLY
+
+  // return  function(dispatch){
+  //   dispatch({ response, type: ActionConstants.LOGGED_SUCCESSFULLY });
+  //   console.log("login");
+
+  };
+}
+
+ loginRequest = function (email, password) {
+  var user = {email: email, password: password};
+  return { user, type: ActionConstants.LOGIN_ATTEMPT };
+}
+
+getAllPosts = function (username, password) {
+ return function(dispatch){
+   helper.getAllPosts()
+   .then(function(response){
+     if (response.status >= 200 && response.status < 300) {
+       dispatch(getAllPostsSuccess(response));
+     } else {
+       const error = new Error(response.statusText);
+       error.response = response;
+       dispatch(loginError(error));
+       throw error;
+     }
+   })
+   .catch(function(error) { console.log('request failed', error); });
+ }
+}
+
+ login = function (username, password) {
+  return function(dispatch){
+    return dispatch(
+     fetchUser(username, dispatch)
+   )
+
+    // helper.login(username, password)
+    // .then(function(response){
+    //   if (response.status >= 200 && response.status < 300) {
+    //   return  Promise.all([
+    //         dispatch(loginSuccess(response))
+    //     ]);
+    //
+    //   } else {
+    //     const error = new Error(response.statusText);
+    //     error.response = response;
+    //     dispatch(loginError(error));
+    //     throw error;
+    //   }
+    //
+    // })
+    // .catch(function(error) { console.log('request failed', error); });
+  }
+}
+
+fetchUser = function(username,password){
+  return function (dispatch) {
+   return helper.login(username,password).then(function(response){
+             if (response.status >= 200 && response.status < 300) {
+                dispatch(loginSuccess(response));
+             }
+             else {
+                 const error = new Error(response.statusText);
+                 error.response = response;
+                 dispatch(loginError(error));
+                 throw error;
+               }
+   }).catch(function(){
+
+   });
+ }
+ }
 module.exports = {
     addUser,
     addPost,
     likePost,
     addReply,
-    removePost
+    removePost,
+    login,
+    loginSuccess,
+    loginRequest,
+    loginError
+
+
+
 };

@@ -54,7 +54,7 @@ var Home = React.createClass({
     						if(keyA > keyB) return 1;
     						return 0;
 								});
-								console.log(arr);
+
 						},
             findPost: function(username, text) {
                 for (var i = 0; i < this.props.postList.length; i++) {
@@ -156,7 +156,6 @@ var Home = React.createClass({
 									});
 								}
 
-								console.log(index);
 
 						},
             render: function() {

@@ -25,18 +25,23 @@ var Login = React.createClass({
 
     handerSubmitUser: function(e) {
         e.preventDefault();
-        console.log(this.props);
-        this.props.loginUserprops(this.state.user, true);
-        this.props.add(this.state.user, this.state.password);
-        if (this.props.loginUsersList.length == this.state.len) {
-            console.log("i am a;ready user");
-        } else {
-            this.state.len = this.props.loginUsersList.length;
-            this.context.router.push({
-                pathname: '/home'
-            });
-        }
-        persistentStorage.login(this.state.user, this.state.password);
+      //  console.log(this.props);
+        this.props.login(this.state.user , this.state.password).then(function(){
+          console.log('this');
+          persistentStorage.login(this.state.user, this.state.password);
+        }.bind(this));
+        // this.props.loginUserprops(this.state.user, true);
+        // this.props.add(this.state.user, this.state.password);
+        console.log(this.props.state);
+        // if (this.props.loginUsersList.length == this.state.len) {
+        //     console.log("i am a;ready user");
+        // } else {
+        //     this.state.len = this.props.loginUsersList.length;
+        //     this.context.router.push({
+        //         pathname: '/home'
+        //     });
+        // }
+
         //helper.login(this.state.user, this.state.password);
     },
     handlerUpdateUserState: function(e) {
@@ -75,7 +80,7 @@ var Login = React.createClass({
 });
 var mapStateToProps = function(state) {
     return {
-        loginUsersList: state
+        state: state
     }
 }
 var mapDispatchToProps = function(dispatch) {
@@ -86,6 +91,9 @@ var mapDispatchToProps = function(dispatch) {
         lookup: function(user) {
             dispatch(actions.lookUp(user));
         },
+        login: function(username, password) {
+          return  dispatch(login(username,password));
+        }
     };
 }
 module.exports = connect(mapStateToProps, mapDispatchToProps)(Login);

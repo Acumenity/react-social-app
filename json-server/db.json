@@ -1,0 +1,16 @@
+{
+  "prople": [
+    {
+      "id": 0,
+      "name": "ahtesham",
+      "password": 123,
+      "post": [{"post":"this is ahtesham","likes":1,"time":"Thu Jun 23 2016 19:53:47 GMT+0500 (PKT)"}]
+    },
+    {
+      "id": 1,
+      "name": "haider",
+      "password": 1234,
+      "post": [{"post":"this is Haider","likes":2,"time":"Thu Jun 23 2016 19:53:47 GMT+0500 (PKT)"}]
+    }
+  ]
+}
