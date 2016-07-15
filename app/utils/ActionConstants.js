@@ -1,0 +1,10 @@
+var ADD_USER ="addUser"
+var ADD_POST ="addPost"
+var LIKE_POST = "likePost"
+var ADD_REPLY = "addReply"
+var REMOVE_POST = "removePost"
+var LOGGED_FAILED = "loginError"
+var LOGGED_SUCCESSFULLY = "loginSuccess"
+var LOGIN_ATTEMPT = "loginRequest"
+var GET_ALL_POSTS  = "getAllPostsSuccess"
+module.exports =  {ADD_USER,ADD_POST,LIKE_POST,ADD_REPLY, REMOVE_POST, LOGGED_FAILED, LOGGED_SUCCESSFULLY, LOGIN_ATTEMPT, GET_ALL_POSTS};
